@@ -4,14 +4,17 @@ def reformat_languages(languages)
   hash = Hash.new 
   arr = []
   
-  languages.each do |key, value|
-    arr << key 
-    value.each do |k, v| 
-      hash[k] = v 
-      hash[k][:style] = [key] 
+  languages.each do |type, lang_hash|
+    lang_hash.each do |name, data| 
+      data.each do |data_name, value| 
+        if hash.key?(name) == false 
+          hash[name] = {data_name => value, :style => [type]}
+        else 
+          hash[name][:style] << type 
+        end 
+      end 
     end 
   end  
-  
-  hash[:javascript][:style] = arr 
   hash 
 end 
+
